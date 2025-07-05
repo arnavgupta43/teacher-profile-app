@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcryptjs = require("bcryptjs");
-
+// Teacher Model
 const teacherScehma = new mongoose.Schema(
   {
     username: {
@@ -53,9 +53,10 @@ const teacherScehma = new mongoose.Schema(
   }
 );
 
-teacherScehma.pre("save", async () => {
+teacherScehma.pre("save", async function (next) {
   if (!this.isModified("passwordHash")) return next;
   this.passwordHash = await bcryptjs.hash(this.passwordHash, 10);
+  return next;
 });
 
 const Teachers =
