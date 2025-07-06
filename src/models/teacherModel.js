@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcryptjs = require("bcryptjs");
 // Teacher Model
-const teacherScehma = new mongoose.Schema(
+const teacherSchema = new mongoose.Schema(
   {
     username: {
       unique: true,
@@ -53,12 +53,29 @@ const teacherScehma = new mongoose.Schema(
   }
 );
 
-teacherScehma.pre("save", async function (next) {
+teacherSchema.pre("save", async function (next) {
   if (!this.isModified("passwordHash")) return next;
   this.passwordHash = await bcryptjs.hash(this.passwordHash, 10);
-  return next;
+  next();
 });
 
+teacherSchema.methods.matchPassword = function (enteredpassword) {
+  return bcryptjs.compare(enteredpassword, this.password);
+};
+
+teacherSchema.methods.createJWT = function () {
+  return jwt.sign(
+    { username: this.username, _id: this._id },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "30d",
+    }
+  );
+};
+teacherScehma.methods.getName = function () {
+  return this.username;
+};
+
 const Teachers =
-  mongoose.teacherModel || mongoose.model("Teachers", teacherScehma);
+  mongoose.models.Teachers || mongoose.model("Teachers", teacherSchema);
 export default Teachers;

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcryptjs = require("bcryptjs");
 //Admin Model
-const adminModel = new mongoose.Schema(
+const adminSchema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -29,8 +29,28 @@ const adminModel = new mongoose.Schema(
   { timestamps: true }
 );
 
-adminModel.pre("save", async function (next) {
-  if (!this.isModified("passwordHash")) return next;
+adminSchema.pre("save", async function (next) {
+  if (!this.isModified("passwordHash")) return next();
   this.passwordHash = await bcryptjs.hash(this.passwordHash, 12);
   next();
 });
+
+adminSchema.methods.matchPassword = function (enteredpassword) {
+  return bcryptjs.compare(enteredpassword, this.password);
+};
+
+adminSchema.methods.createJWT = function () {
+  return jwt.sign(
+    { username: this.username, _id: this._id },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "30d",
+    }
+  );
+};
+adminSchema.methods.getName = function () {
+  return this.username;
+};
+
+const Admin = mongoose.models.Admin || mongoose.model("Admin", adminSchema);
+module.exports = Admin;
