@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { Menu, X, BookOpen } from "lucide-react";
@@ -33,7 +34,7 @@ export default function AdminLoginPage() {
       router.push("/profile");
     } catch (error: any) {
       console.log("Login Failed", error.message);
-      toast.error(error.message);
+      toast.error(error.response?.data?.error || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -41,6 +42,7 @@ export default function AdminLoginPage() {
 
   return (
     <div className="bg-gradient-to-r from-purple-50 to-pink-50 min-h-screen">
+      <Toaster position="top-right" />
       {/* Navigation */}
       <nav className="bg-white shadow-sm border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
