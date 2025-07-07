@@ -31,7 +31,7 @@ export default function AdminLoginPage() {
       setLoading(true);
       const response = await axios.post("/api/admin/login", user);
       console.log(response.data);
-      router.push("/profile");
+      router.push("/admin/dashboard");
     } catch (error: any) {
       console.log("Login Failed", error.message);
       toast.error(error.response?.data?.error || "Something went wrong");

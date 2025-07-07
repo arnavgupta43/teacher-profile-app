@@ -30,7 +30,7 @@ export default function TeacherLoginPage() {
       setLoading(true);
       const response = await axios.post("/api/teacher/login", user);
       console.log(response.data);
-      router.push("/profile");
+      router.push("/dashboard");
     } catch (error: any) {
       console.log("Login Failed", error.message);
       toast.error(error.message);
