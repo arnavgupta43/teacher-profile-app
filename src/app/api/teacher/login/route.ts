@@ -1,10 +1,10 @@
 import { connect } from "@/dbConfig/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
 import Teachers from "@/models/teacherModel";
-connect();
 
 export async function POST(request: NextRequest) {
   try {
+    await connect();
     const reqBody = await request.json();
     const { email, password } = reqBody;
     const teacher = await Teachers.findOne({ email });

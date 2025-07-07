@@ -1,10 +1,11 @@
 import { connect } from "@/dbConfig/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
 import Admin from "@/models/adminModel";
-connect();
+
 console.log("Hit");
 export async function POST(request: NextRequest) {
   try {
+    await connect();
     const reqBody = await request.json();
     const { email, password } = reqBody;
     const admin = await Admin.findOne({ email });
