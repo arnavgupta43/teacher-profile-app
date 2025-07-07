@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const bcryptjs = require("bcryptjs");
+import jwt from "jsonwebtoken";
+
 // Teacher Model
+import { connect } from "@/dbConfig/dbConfig";
+connect();
 const teacherSchema = new mongoose.Schema(
   {
     username: {
@@ -33,6 +37,7 @@ const teacherSchema = new mongoose.Schema(
       },
       age: {
         type: Number,
+        required: [true, "Age is required"],
         min: 18,
       },
       mobileNo: {
@@ -60,7 +65,7 @@ teacherSchema.pre("save", async function (next) {
 });
 
 teacherSchema.methods.matchPassword = function (enteredpassword) {
-  return bcryptjs.compare(enteredpassword, this.password);
+  return bcryptjs.compare(enteredpassword, this.passwordHash);
 };
 
 teacherSchema.methods.createJWT = function () {
@@ -72,10 +77,10 @@ teacherSchema.methods.createJWT = function () {
     }
   );
 };
-teacherScehma.methods.getName = function () {
+teacherSchema.methods.getName = function () {
   return this.username;
 };
 
 const Teachers =
-  mongoose.models.Teachers || mongoose.model("Teachers", teacherSchema);
+  mongoose.models?.Teachers || mongoose.model("Teachers", teacherSchema);
 export default Teachers;

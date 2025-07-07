@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const bcryptjs = require("bcryptjs");
+import jwt from "jsonwebtoken";
+
 //Admin Model
+import { connect } from "@/dbConfig/dbConfig";
 const adminSchema = new mongoose.Schema(
   {
     username: {
@@ -36,7 +39,7 @@ adminSchema.pre("save", async function (next) {
 });
 
 adminSchema.methods.matchPassword = function (enteredpassword) {
-  return bcryptjs.compare(enteredpassword, this.password);
+  return bcryptjs.compare(enteredpassword, this.passwordHash);
 };
 
 adminSchema.methods.createJWT = function () {
@@ -53,4 +56,4 @@ adminSchema.methods.getName = function () {
 };
 
 const Admin = mongoose.models.Admin || mongoose.model("Admin", adminSchema);
-module.exports = Admin;
+export default Admin;
