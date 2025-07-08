@@ -31,6 +31,7 @@ export default function AdminLoginPage() {
       setLoading(true);
       const response = await axios.post("/api/admin/login", user);
       console.log(response.data);
+      console.log("Pushing to dashBoard")
       router.push("/admin/dashboard");
     } catch (error: any) {
       console.log("Login Failed", error.message);
