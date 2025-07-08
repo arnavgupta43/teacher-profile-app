@@ -44,7 +44,7 @@ adminSchema.methods.matchPassword = function (enteredpassword) {
 
 adminSchema.methods.createJWT = function () {
   return jwt.sign(
-    { username: this.username, _id: this._id },
+    { username: this.username, role: "admin", _id: this._id },
     process.env.JWT_SECRET,
     {
       expiresIn: "30d",
