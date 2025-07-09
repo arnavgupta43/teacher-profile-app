@@ -8,8 +8,8 @@ const getJwtSecret = () => {
 };
 
 export async function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname;
-  const token = request.cookies.get("token")?.value || "";
+  const path = request.nextUrl.pathname; //get the path
+  const token = request.cookies.get("token")?.value || ""; //get the token
 
   const isAdminRoute = path.startsWith("/admin/dashboard");
   const isTeacherRoute = path.startsWith("/teacher/dashboard");
