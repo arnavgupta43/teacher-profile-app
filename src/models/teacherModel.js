@@ -70,7 +70,7 @@ teacherSchema.methods.matchPassword = function (enteredpassword) {
 
 teacherSchema.methods.createJWT = function () {
   return jwt.sign(
-    { username: this.username, role:"teacher", _id: this._id },
+    { username: this.username, role: "teacher", _id: this._id },
     process.env.JWT_SECRET,
     {
       expiresIn: "30d",
