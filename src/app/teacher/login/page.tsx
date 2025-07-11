@@ -8,6 +8,9 @@ import { useState } from "react";
 import { Menu, X, BookOpen } from "lucide-react";
 
 export default function TeacherLoginPage() {
+  useEffect(() => {
+    router.push("/teacher/dashboard");
+  }, []);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [loading, setLoading] = React.useState(false);
   const [buttonDisable, setButtonDisable] = React.useState(true);

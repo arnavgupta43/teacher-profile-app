@@ -9,8 +9,9 @@ import {
   FileText,
   Award,
 } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 const TeacherProfile = () => {
+  const router = useRouter();
   const [teacher, setTeacher] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -106,7 +107,12 @@ const TeacherProfile = () => {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <BookOpen className="h-8 w-8 text-blue-600 mr-2" />
-              <span className="text-xl font-bold text-gray-900">
+              <span
+                className="text-xl font-bold text-gray-900 cursor-pointer"
+                onClick={() => {
+                  router.push("/");
+                }}
+              >
                 EduConnect
               </span>
             </div>
