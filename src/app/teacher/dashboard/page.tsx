@@ -9,14 +9,26 @@ import {
   FileText,
   Award,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { redirect, RedirectType, useRouter } from "next/navigation";
+import { request } from "http";
+import { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
+import axios from "axios";
 const TeacherProfile = () => {
   const router = useRouter();
   const [teacher, setTeacher] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState("about");
-
+  const logout = async () => {
+    try {
+      const response = await axios.post("/api/logout");
+      console.log(response.data);
+      redirect("/", RedirectType.push);
+    } catch (error: any) {
+      toast.error(error.response?.data?.error || "Something went wrong");
+    }
+  };
   useEffect(() => {
     fetchTeacherProfile();
   }, []);
@@ -55,6 +67,7 @@ const TeacherProfile = () => {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Toaster position="top-right" />
         <div className="text-center">
           <div className="text-red-600 mb-4">
             <svg
@@ -117,12 +130,14 @@ const TeacherProfile = () => {
               </span>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-gray-700 hover:text-blue-600">
-                Dashboard
-              </a>
-              <a href="#" className="text-gray-700 hover:text-blue-600">
-                Courses
-              </a>
+              <button
+                className="bg-blue-500 hover:bg-red-700 text-white rounded px-2 py-1"
+                onClick={() => {
+                  logout;
+                }}
+              >
+                Logout
+              </button>
               <div className="w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center">
                 <span className="text-white text-sm font-medium">
                   {teacher.name?.charAt(0) || "T"}
