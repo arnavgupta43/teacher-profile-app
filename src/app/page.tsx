@@ -1,9 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X, BookOpen, Users, GraduationCap } from "lucide-react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 export default function Home() {
+  useEffect(() => {
+    const populate = async () => {
+      try {
+        axios.get("/api/populate");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    // populate();
+  }, []);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
 
