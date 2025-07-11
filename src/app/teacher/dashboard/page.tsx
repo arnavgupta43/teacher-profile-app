@@ -24,7 +24,7 @@ const TeacherProfile = () => {
     try {
       const response = await axios.post("/api/logout");
       console.log(response.data);
-      redirect("/", RedirectType.push);
+      router.replace("/");
     } catch (error: any) {
       toast.error(error.response?.data?.error || "Something went wrong");
     }
@@ -132,9 +132,7 @@ const TeacherProfile = () => {
             <nav className="hidden md:flex space-x-8">
               <button
                 className="bg-blue-500 hover:bg-red-700 text-white rounded px-2 py-1"
-                onClick={() => {
-                  logout;
-                }}
+                onClick={logout}
               >
                 Logout
               </button>
