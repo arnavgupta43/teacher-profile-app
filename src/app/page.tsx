@@ -40,14 +40,16 @@ export default function Home() {
 
             <div className="hidden md:flex items-center space-x-8">
               <a
-                href="#"
-                className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                onClick={() => {
+                  router.push("/about");
+                }}
+                className="text-gray-700 hover:text-blue-600 font-medium transition-colors cursor-pointer"
               >
                 About
               </a>
               <a
-                href="#"
-                className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                onClick={() => router.push("/contact")}
+                className="text-gray-700 hover:text-blue-600 font-medium transition-colors cursor-pointer"
               >
                 Contact
               </a>
