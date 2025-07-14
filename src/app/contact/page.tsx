@@ -6,11 +6,16 @@ import { useRouter } from "next/navigation";
 import { subscribe } from "diagnostics_channel";
 import toast, { ToastBar } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
+import { resolve } from "path";
 export default function ContactPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
   const [isDisable, setDisable] = useState(false);
-
+  //defining the sleep function to add delay after message sent
+  function sleep(ns: number) {
+    return new Promise((resolve) => setTimeout(resolve, ns));
+  }
+  //State for the form Data
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -23,9 +28,10 @@ export default function ContactPage() {
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  //Submit Function
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    //Check for the missing values
     if (Object.values(formData).some((val) => !val.trim())) {
       toast.error("Please fill in all fields.");
       setDisable(false);
@@ -40,8 +46,10 @@ export default function ContactPage() {
       formPayload.append("email", formData.email);
       formPayload.append("subject", formData.subject);
       formPayload.append("message", formData.message);
-
-      const response = await fetch(process.env.FORM_URL!, {
+      console.log(formPayload);
+      const url = process.env.NEXT_PUBLIC_FORMSPREE_URL;
+      //call the formsphere api
+      const response = await fetch(url!, {
         method: "POST",
         body: formPayload,
         mode: "cors",
@@ -49,11 +57,10 @@ export default function ContactPage() {
           Accept: "application/json",
         },
       });
+      console.log(response);
       if (response.ok) {
         toast.success("Messgae Sent");
-        setTimeout(() => {
-          //delay
-        }, 2300);
+        await sleep(4000); //add delay
         window.location.reload();
         setFormData({
           firstName: "",
@@ -63,12 +70,12 @@ export default function ContactPage() {
           message: "",
         });
       } else {
-        toast.error("Message not sent");
+        toast.error("Message not sent"); //shoe the error at top right
       }
     } catch (error) {
       toast.error("Failed to send message");
     } finally {
-      setDisable(false);
+      setDisable(false); //activate the button
     }
   };
   return (
@@ -299,7 +306,7 @@ export default function ContactPage() {
             {/* Twitter */}
             <div className="group relative">
               <a
-                href="https://twitter.com/optimisticweb"
+                href="https://x.com/arnavgupta43"
                 className="relative flex justify-center items-center w-16 h-16 text-2xl text-gray-700 border-2 border-gray-300 rounded-full overflow-hidden transition-all duration-300 hover:text-white hover:border-blue-500 hover:shadow-lg"
                 aria-label="Twitter"
               >
@@ -314,7 +321,7 @@ export default function ContactPage() {
             {/* Instagram */}
             <div className="group relative">
               <a
-                href="https://www.instagram.com/optimisticweb"
+                href="https://www.instagram.com/arnavgupta_43"
                 className="relative flex justify-center items-center w-16 h-16 text-2xl text-gray-700 border-2 border-gray-300 rounded-full overflow-hidden transition-all duration-300 hover:text-white hover:border-pink-500 hover:shadow-lg"
                 aria-label="Instagram"
               >
