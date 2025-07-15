@@ -1,11 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Menu, X, BookOpen, Users, GraduationCap } from "lucide-react";
-import { FaTwitter, FaInstagram } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { MarqueeDemo } from "@/components/reviews/review";
+import { RippleDemo } from "@/components/AboutAnimation/rippleDemo";
+
 export default function AboutPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
+
   return (
     <div className="bg-gradient-to-r from-purple-50 to-pink-50 min-h-screen">
       <nav className="bg-white shadow-sm border-b border-gray-100">
@@ -89,22 +92,102 @@ export default function AboutPage() {
           </div>
         )}
       </nav>
-      {/* Main contianer */}
-      <main className="max-w-7xl mx-auto px-4 mt-11 sm:px-6 lg:px-8 py-12">
-        <div className="border-2 border-amber-800 px-3 py-3">
-          <p className="text-2xl md:text-2xl font-bold text-gray-900 leading-tight text-center">
-            A web portal for the faulties to view their details and admins to
-            manage faulty.
+
+      {/* Main container */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Hero Section with Ripple Animation */}
+        <section className="py-10 text-center">
+          <div className="relative h-[400px] w-full overflow-hidden rounded-2xl mb-8">
+            <RippleDemo />
+          </div>
+
+          <p className="text-xl text-gray-900  max-w-3xl mx-auto leading-relaxed">
+            Your comprehensive faculty management solution designed to
+            streamline educational administration and enhance institutional
+            efficiency.
           </p>
-          <p className="text-2xl md:text-2xl font-bold text-gray-900 leading-tight text-center">
-            Admin can create , view , upadate nad delete faculties are per
-            requirement
-          </p>
-          <p className="text-2xl md:text-2xl font-bold text-gray-900 leading-tight text-center">
-            Still in the developement phase as more features are been rolled out
-            constanlly
-          </p>
-        </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="py-10">
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <Users className="w-6 h-6 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                Faculty Management
+              </h3>
+              <p className="text-gray-600">
+                A comprehensive web portal that allows faculties to view their
+                details and personal information in a user-friendly interface.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                <GraduationCap className="w-6 h-6 text-purple-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                Admin Control
+              </h3>
+              <p className="text-gray-600">
+                Administrators can create, view, update, and delete faculty
+                records as per institutional requirements with full CRUD
+                operations.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                <BookOpen className="w-6 h-6 text-green-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                Continuous Development
+              </h3>
+              <p className="text-gray-600">
+                Currently in active development with new features being rolled
+                out constantly to enhance user experience and functionality.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Reviews Section */}
+        <section className="py-10">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              What Our Users Say
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Discover how EduConnect is transforming faculty management across
+              educational institutions.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+            <MarqueeDemo />
+          </div>
+        </section>
+
+        {/* Call to Action */}
+        <section className="py-12 text-center">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-12 text-white">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Ready to Get Started?
+            </h2>
+            <p className="text-xl mb-8 opacity-90">
+              Join thousands of educational institutions already using
+              EduConnect to streamline their faculty management.
+            </p>
+            <button
+              onClick={() => router.push("/")}
+              className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-lg"
+            >
+              Get Started Today
+            </button>
+          </div>
+        </section>
       </main>
     </div>
   );
