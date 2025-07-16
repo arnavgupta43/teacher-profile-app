@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
-const bcryptjs = require("bcryptjs");
+import mongoose from "mongoose";
+import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { connect } from "@/dbConfig/dbConfig";
 
 // Teacher Model
-import { connect } from "@/dbConfig/dbConfig";
 connect();
 const teacherSchema = new mongoose.Schema(
   {
@@ -64,14 +64,14 @@ teacherSchema.pre("save", async function (next) {
   next();
 });
 
-teacherSchema.methods.matchPassword = function (enteredpassword) {
+teacherSchema.methods.matchPassword = function (enteredpassword:any) {
   return bcryptjs.compare(enteredpassword, this.passwordHash);
 };
 
 teacherSchema.methods.createJWT = function () {
   return jwt.sign(
     { username: this.username, role: "teacher", _id: this._id },
-    process.env.JWT_SECRET,
+    process.env.JWT_SECRET!,
     {
       expiresIn: "30d",
     }

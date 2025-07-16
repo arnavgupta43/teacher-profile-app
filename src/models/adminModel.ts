@@ -1,8 +1,6 @@
-const mongoose = require("mongoose");
-const bcryptjs = require("bcryptjs");
+import mongoose from "mongoose";
+import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
-
-//Admin Model
 import { connect } from "@/dbConfig/dbConfig";
 const adminSchema = new mongoose.Schema(
   {
@@ -38,14 +36,14 @@ adminSchema.pre("save", async function (next) {
   next();
 });
 
-adminSchema.methods.matchPassword = function (enteredpassword) {
+adminSchema.methods.matchPassword = function (enteredpassword: any) {
   return bcryptjs.compare(enteredpassword, this.passwordHash);
 };
 
 adminSchema.methods.createJWT = function () {
   return jwt.sign(
     { username: this.username, role: "admin", _id: this._id },
-    process.env.JWT_SECRET,
+    process.env.JWT_SECRET!,
     {
       expiresIn: "30d",
     }
