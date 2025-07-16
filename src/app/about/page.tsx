@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Menu, X, BookOpen, Users, GraduationCap } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { MarqueeDemo } from "@/components/reviews/review";
-import { RippleDemo } from "@/components/AboutAnimation/rippleDemo";
+import { RippleDemo } from "@/components/AboutAnimation/RippleDemo";
 
 export default function AboutPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
