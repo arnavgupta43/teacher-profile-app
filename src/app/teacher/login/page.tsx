@@ -9,7 +9,19 @@ import { Menu, X, BookOpen } from "lucide-react";
 
 export default function TeacherLoginPage() {
   useEffect(() => {
-    router.push("/teacher/dashboard");
+    const checkAuth = async () => {
+      try {
+        const res = await axios.get("/api/teacher/dashboard", {
+          validateStatus: () => true,
+        });
+        if (res.status === 200) {
+          router.push("/teacher/dashboard");
+        }
+      } catch {
+        // ignore error - user not logged in
+      }
+    };
+    checkAuth();
   }, []);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -95,8 +107,11 @@ export default function TeacherLoginPage() {
         {mobileMenuOpen && (
           <div className="md:hidden bg-white border-t border-gray-100">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              <a className="block px-3 py-2 text-gray-700 hover:text-blue-600">
-                href="/teacher/login" Teacher
+              <a
+                href="/teacher/login"
+                className="block px-3 py-2 text-gray-700 hover:text-blue-600"
+              >
+                Teacher
               </a>
               <button className="w-full text-left px-3 py-2 text-blue-600 font-medium">
                 Admin

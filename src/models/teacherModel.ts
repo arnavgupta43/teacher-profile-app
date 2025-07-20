@@ -59,12 +59,12 @@ const teacherSchema = new mongoose.Schema(
 );
 
 teacherSchema.pre("save", async function (next) {
-  if (!this.isModified("passwordHash")) return next;
+  if (!this.isModified("passwordHash")) next();
   this.passwordHash = await bcryptjs.hash(this.passwordHash, 10);
   next();
 });
 
-teacherSchema.methods.matchPassword = function (enteredpassword:any) {
+teacherSchema.methods.matchPassword = function (enteredpassword: any) {
   return bcryptjs.compare(enteredpassword, this.passwordHash);
 };
 
