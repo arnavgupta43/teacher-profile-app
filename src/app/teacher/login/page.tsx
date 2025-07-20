@@ -8,21 +8,21 @@ import { useState } from "react";
 import { Menu, X, BookOpen } from "lucide-react";
 
 export default function TeacherLoginPage() {
-useEffect(() => {
-  const checkAuth = async () => {
-    try {
-      const res = await axios.get("/api/teacher/dashboard", {
-        validateStatus: () => true,
-      });
-      if (res.status === 200) {
-        router.push("/teacher/dashboard");
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await axios.get("/api/teacher/dashboard", {
+          validateStatus: () => true,
+        });
+        if (res.status === 200) {
+          router.push("/teacher/dashboard");
+        }
+      } catch {
+        // ignore error - user not logged in
       }
-    } catch {
-      // ignore error - user not logged in
-    }
-  };
-  checkAuth();
-}, []);
+    };
+    checkAuth();
+  }, []);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [loading, setLoading] = React.useState(false);
   const [buttonDisable, setButtonDisable] = React.useState(true);
