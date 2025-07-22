@@ -19,7 +19,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid Password" }, { status: 400 });
     }
     const token = teacher.createJWT();
-    const response = NextResponse.json({ message: "Success" }, { status: 200 });
+    const response = NextResponse.json(
+      { message: "Success", token },
+      { status: 200 }
+    );
     response.cookies.set("token", token, {
       httpOnly: true,
     });
