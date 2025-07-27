@@ -11,7 +11,7 @@ export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname; //get the path
   const token = request.cookies.get("token")?.value || ""; //get the token
 
-  const isAdminRoute = path.startsWith("/admin/dashboard");
+  const isAdminRoute = path.startsWith("/admin/dashboard") || path.startsWith("/admin/teacher");
   const isTeacherRoute = path.startsWith("/teacher/dashboard");
 
   if (isAdminRoute || isTeacherRoute) {
@@ -39,5 +39,9 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/dashboard", "/teacher/dashboard"],
+  matcher: [
+    "/admin/dashboard/:path*",
+    "/admin/teacher/:path*",
+    "/teacher/dashboard",
+  ],
 };
